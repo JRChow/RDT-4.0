@@ -6,7 +6,7 @@ functions: rdt_network_init, rdt_socket(), rdt_bind(), rdt_peer()
 
 Student name: ZHOU Jingran
 Student No. : 3035232468
-Date and version: 1 Apr, Version 0
+Date and version: 2 Apr, Version 1
 Development platform: Developed on macOS High Sierra (Version 10.13.3); Tested on Ubuntu 16.04 LTS
 Python version: Python 3.6.3
 """
@@ -117,7 +117,7 @@ def __int_chksum(byte_msg):
 
 # These are the functions used by application
 
-def rdt_network_init(drop_rate, err_rate, W):
+def rdt_network_init(drop_rate, err_rate, w):
     """Application calls this function to set properties of underlying network.
 
     Input arguments: packet drop probability, packet corruption probability and Window size
@@ -126,7 +126,7 @@ def rdt_network_init(drop_rate, err_rate, W):
     global __LOSS_RATE, __ERR_RATE, __W
     __LOSS_RATE = float(drop_rate)
     __ERR_RATE = float(err_rate)
-    __W = int(W)
+    __W = int(w)
     print("Drop rate:", __LOSS_RATE, "\tError rate:", __ERR_RATE, "\tWindow size:", __W)
 
 
@@ -459,6 +459,7 @@ def rdt_recv(sockd, length):
         except socket.error as err_msg:
             print("rdt_recv(): Socket receive error: " + str(err_msg))
             return b''
+        print("rdt_recv(): Received " + str(__unpack_helper(recv_pkt)[0]))
 
         # If packet is corrupt or is ACK, ignore
         if __is_corrupt(recv_pkt) or __is_type(recv_pkt, TYPE_ACK):
