@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d673bcd-deb0-466f-9b03-3eccee31322d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/rdt4.py" afterPath="$PROJECT_DIR$/rdt4.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,23 +17,20 @@
       <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="174" column="0" lean-forward="true" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+            <state relative-caret-position="226">
+              <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
               <folding>
-                <element signature="e#19#380#1" expanded="false" />
                 <element signature="e#1431#2693#0" expanded="false" />
                 <element signature="e#2731#3012#0" expanded="false" />
                 <element signature="e#3047#3658#0" expanded="false" />
-                <element signature="e#5440#5636#0" expanded="false" />
-                <element signature="e#5675#6502#0" expanded="false" />
-                <element signature="e#6534#6863#0" expanded="false" />
-                <element signature="e#6896#7191#0" expanded="false" />
-                <element signature="e#7226#8186#0" expanded="false" />
-                <element signature="e#8247#8627#0" expanded="false" />
-                <element signature="e#8669#8906#0" expanded="false" />
-                <element signature="e#8938#9672#0" expanded="false" />
-                <element signature="e#9713#10049#0" expanded="false" />
-                <element signature="e#17167#18965#0" expanded="false" />
+                <element signature="e#5716#6543#0" expanded="false" />
+                <element signature="e#6575#6904#0" expanded="false" />
+                <element signature="e#6937#7232#0" expanded="false" />
+                <element signature="e#7267#8227#0" expanded="false" />
+                <element signature="e#8288#8668#0" expanded="false" />
+                <element signature="e#8710#8947#0" expanded="false" />
+                <element signature="e#10115#10420#0" expanded="false" />
+                <element signature="e#17718#19516#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -48,6 +46,9 @@
       <find>__is_data</find>
       <find>is_ack_between</find>
       <find>has_seq</find>
+      <find>msg</find>
+      <find>data</find>
+      <find>make</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522599862260</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix nonetype">
+      <created>1522600156966</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1522600156966</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -200,7 +208,8 @@
     <MESSAGE value="draft rdt_recv()" />
     <MESSAGE value="draft close" />
     <MESSAGE value="push before ubuntu test" />
-    <option name="LAST_COMMIT_MESSAGE" value="push before ubuntu test" />
+    <MESSAGE value="fix nonetype" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix nonetype" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -217,23 +226,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="174" column="0" lean-forward="true" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+        <state relative-caret-position="226">
+          <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
           <folding>
-            <element signature="e#19#380#1" expanded="false" />
             <element signature="e#1431#2693#0" expanded="false" />
             <element signature="e#2731#3012#0" expanded="false" />
             <element signature="e#3047#3658#0" expanded="false" />
-            <element signature="e#5440#5636#0" expanded="false" />
-            <element signature="e#5675#6502#0" expanded="false" />
-            <element signature="e#6534#6863#0" expanded="false" />
-            <element signature="e#6896#7191#0" expanded="false" />
-            <element signature="e#7226#8186#0" expanded="false" />
-            <element signature="e#8247#8627#0" expanded="false" />
-            <element signature="e#8669#8906#0" expanded="false" />
-            <element signature="e#8938#9672#0" expanded="false" />
-            <element signature="e#9713#10049#0" expanded="false" />
-            <element signature="e#17167#18965#0" expanded="false" />
+            <element signature="e#5716#6543#0" expanded="false" />
+            <element signature="e#6575#6904#0" expanded="false" />
+            <element signature="e#6937#7232#0" expanded="false" />
+            <element signature="e#7267#8227#0" expanded="false" />
+            <element signature="e#8288#8668#0" expanded="false" />
+            <element signature="e#8710#8947#0" expanded="false" />
+            <element signature="e#10115#10420#0" expanded="false" />
+            <element signature="e#17718#19516#0" expanded="false" />
           </folding>
         </state>
       </provider>

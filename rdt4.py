@@ -182,7 +182,7 @@ def __count_pkt(data):
     Input arguments: data
     Return  -> number of packets that will be generated
     """
-    return int(math.ceil(len(data) / PAYLOAD))
+    return int(math.ceil(float(len(data)) / PAYLOAD))  # Float to prevent rounding down
 
 
 def __make_data(seq_num, data):
@@ -331,6 +331,17 @@ def __has_seq(recv_msg, seq_num):
     return recv_seq_num == seq_num
 
 
+def __parse(msg):
+    """Parse message."""
+    msg_str = ""
+    (msg_type, seq_num, checksum, payload_len), payload = __unpack_helper(msg)
+    if msg_type == TYPE_DATA:
+        msg_str += "DATA"
+    elif msg_type == TYPE_ACK:
+        msg_str += "ACK"
+    msg_str += "[%d] of size %d" % (seq_num, payload_len)
+    return msg_str
+
 # ------------------------------------------------------------------
 # Send, receive, close.
 
@@ -351,6 +362,7 @@ def rdt_send(sockd, byte_msg):
     # Count how many packets needed to send byte_msg
     whole_msg_len = len(byte_msg)  # Size of the whole message
     __N = __count_pkt(byte_msg)
+    print("# packets to be sent = %d" % __N)
     snd_pkt = [None] * __N  # Packets to be sent
     first_unacked_ind = 0  # Index of the first unACKed packet
 
@@ -423,6 +435,7 @@ def rdt_send(sockd, byte_msg):
             for i in range(first_unacked_ind, __N):
                 try:
                     __udt_send(sockd, __peeraddr, snd_pkt[i])
+                    print("* rdt_send(): resent " + __parse(snd_pkt[i]))
                 except socket.error as err_msg:
                     print("Socket send error: ", err_msg)
                     return -1
