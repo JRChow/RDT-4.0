@@ -37,6 +37,7 @@ __ERR_RATE = 0.0  # set by rdt_network_init()
 __W = 1  # set by rdt_network_init()
 __next_seq_num = 0  # Next sequence number for sender (initially 0)
 __S = 0  # Sender base
+__N = 1  # Number of packets to be sent
 __exp_seq_num = 0  # Expected sequence number for receiver (initially 0)
 
 
@@ -267,15 +268,15 @@ def __is_corrupt(recv_pkt):
     return result
 
 
-def __is_ack_between(recv_pkt, low, high):
-    """Check if the received packet is ACK between low and high.
+def __is_type_between(recv_pkt, pkt_type, low, high):
+    """Check if the received packet is pkt_type between low and high.
 
-    Input arguments: received packet, lower bound, upper bound
-    Return  -> True if received ACK w/ seq# in [low, high]
+    Input arguments: received packet, packet type, lower bound, upper bound
+    Return  -> True if received pkt_type w/ seq# in [low, high]
     """
     # Dissect the received packet
-    (msg_type, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
-    return msg_type == TYPE_ACK and low <= recv_seq_num <= high
+    (recv_type, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
+    return recv_type == pkt_type and low <= recv_seq_num <= high
 
 
 def __is_type(recv_pkt, pkt_type):
@@ -345,18 +346,18 @@ def rdt_send(sockd, byte_msg):
     whole message has been successfully delivered to remote process.
     (2) Catch any known error and report to the user.
     """
-    global __S, __next_seq_num, __last_ack_no
+    global __S, __next_seq_num, __last_ack_no, __N
 
     # Count how many packets needed to send byte_msg
-    n = __count_pkt(byte_msg)
-    snd_pkt = [None] * n  # Packets to be sent
+    __N = __count_pkt(byte_msg)
+    snd_pkt = [None] * __N  # Packets to be sent
     first_unacked_ind = 0  # Index of the first unACKed packet
 
     # Update sender base
     __S = __next_seq_num
 
     # Compose and send all data packets
-    for i in range(n):
+    for i in range(__N):
         data, byte_msg = __cut_msg(byte_msg)  # Extract from remaining msg
         snd_pkt[i] = __make_data(__next_seq_num, data)  # Make data packet
         # Send the new packet
@@ -384,12 +385,12 @@ def rdt_send(sockd, byte_msg):
                     return -1
 
                 # If corrupted or ACK outside window, keep waiting
-                if __is_corrupt(recv_pkt) or not __is_ack_between(recv_pkt, __S, __S + n - 1):
+                if __is_corrupt(recv_pkt) or not __is_type_between(recv_pkt, TYPE_ACK, __S, __S + __N - 1):
                     print("rdt_send(): recv [corrupt] OR unexpected [ACK %d] | Keep waiting for ACK [%d]")
                     # % (1-__send_seq_num, __send_seq_num))
 
                 # Happily received ACK in window, and set as ACKed
-                elif __is_ack_between(recv_pkt, __S, __S + n - 2):
+                elif __is_type_between(recv_pkt, TYPE_ACK, __S, __S + __N - 2):
                     (_, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
                     # Update first unACKed index if necessary (cumulative ACK)
                     first_unacked_ind = max(recv_seq_num - __S + 1, first_unacked_ind)
@@ -412,13 +413,13 @@ def rdt_send(sockd, byte_msg):
                     # print("rdt_send(): ACK DATA [%d]" % data_seq_num)
 
                 # Received all ACKs
-                elif __is_ack_between(recv_pkt, __S + n - 1, __S + n - 1):
+                elif __is_type_between(recv_pkt, TYPE_ACK, __S + __N - 1, __S + __N - 1):
                     return len(byte_msg)  # Return size of data sent
 
         else:  # Timeout
             print("* TIMEOUT!")
             # Re-transmit all unACKed packets
-            for i in range(first_unacked_ind, n):
+            for i in range(first_unacked_ind, __N):
                 try:
                     __udt_send(sockd, __peeraddr, snd_pkt[i])
                 except socket.error as err_msg:
@@ -495,4 +496,34 @@ def rdt_close(sockd):
     (2) Before closing the RDT socket, the reliable layer needs to wait for TWAIT
     time units before closing the socket.
     """
-######## Your implementation #######
+    r_sock_list = [sockd]  # Used in select.select()
+
+    ok_to_close = False  # If has been quiet for a while
+
+    while not ok_to_close:
+        r, _, _ = select.select(r_sock_list, [], [], TWAIT)  # Wait for TWAIT time
+        if r:  # Incoming activity
+            for sock in r:
+                # Try to receive
+                try:
+                    recv_pkt = __udt_recv(sock, PAYLOAD + HEADER_SIZE)  # Add header size
+                except socket.error as err_msg:
+                    print("rdt_close(): __udt_recv error: ", err_msg)
+                print("rdt_close(): Got activity -> " + str(__unpack_helper(recv_pkt)[0]))
+                # If not corrupt and is DATA of the last window
+                if not __is_corrupt(recv_pkt) and __is_type_between(recv_pkt, TYPE_DATA, __S, __S + __N):
+                    # Ack the DATA packet
+                    (_, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
+                    try:
+                        __udt_send(sockd, __peeraddr, __make_ack(recv_seq_num))
+                    except socket.error as err_msg:
+                        print("rdt_close(): Error in ACK-ing data: " + str(err_msg))
+                    print("rdt_close(): Sent last ACK[%d]")
+        else:  # Timeout!
+            print("rdt_close(): time to CLOSE!!!")
+            ok_to_close = True
+            # Close socket
+            try:
+                sockd.close()
+            except socket.error as err_msg:
+                print("Socket close error: ", err_msg)

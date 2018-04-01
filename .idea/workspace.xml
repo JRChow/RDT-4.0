@@ -17,26 +17,25 @@
       <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="487" column="0" lean-forward="true" selection-start-line="487" selection-start-column="0" selection-end-line="487" selection-end-column="0" />
+            <state relative-caret-position="515">
+              <caret line="524" column="26" lean-forward="false" selection-start-line="524" selection-start-column="26" selection-end-line="524" selection-end-column="26" />
               <folding>
                 <element signature="e#382#395#0" expanded="true" />
-                <element signature="e#1391#2653#0" expanded="false" />
-                <element signature="e#2691#2972#0" expanded="false" />
-                <element signature="e#3007#3618#0" expanded="false" />
-                <element signature="e#3718#4126#0" expanded="false" />
-                <element signature="e#4151#4548#0" expanded="false" />
-                <element signature="e#4582#5012#0" expanded="false" />
-                <element signature="e#5048#5276#0" expanded="false" />
-                <element signature="e#5400#5596#0" expanded="false" />
-                <element signature="e#5635#6462#0" expanded="false" />
-                <element signature="e#6494#6823#0" expanded="false" />
-                <element signature="e#6856#7151#0" expanded="false" />
-                <element signature="e#7186#8146#0" expanded="false" />
-                <element signature="e#8196#8551#0" expanded="false" />
-                <element signature="e#8593#8830#0" expanded="false" />
-                <element signature="e#8862#9596#0" expanded="false" />
-                <element signature="e#10106#14158#0" expanded="false" />
+                <element signature="e#1431#2693#0" expanded="false" />
+                <element signature="e#2731#3012#0" expanded="false" />
+                <element signature="e#3047#3658#0" expanded="false" />
+                <element signature="e#3758#4166#0" expanded="false" />
+                <element signature="e#4191#4588#0" expanded="false" />
+                <element signature="e#4622#5052#0" expanded="false" />
+                <element signature="e#5088#5316#0" expanded="false" />
+                <element signature="e#5440#5636#0" expanded="false" />
+                <element signature="e#5675#6502#0" expanded="false" />
+                <element signature="e#6534#6863#0" expanded="false" />
+                <element signature="e#6896#7191#0" expanded="false" />
+                <element signature="e#7226#8186#0" expanded="false" />
+                <element signature="e#8247#8627#0" expanded="false" />
+                <element signature="e#8669#8906#0" expanded="false" />
+                <element signature="e#8938#9672#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -50,6 +49,8 @@
       <find>send</find>
       <find>last_ack</find>
       <find>__is_data</find>
+      <find>is_ack_between</find>
+      <find>has_seq</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522596615953</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="draft rdt_recv()">
+      <created>1522597821863</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1522597821863</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -178,7 +186,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="draft rdt_send" />
-    <option name="LAST_COMMIT_MESSAGE" value="draft rdt_send" />
+    <MESSAGE value="draft rdt_recv()" />
+    <option name="LAST_COMMIT_MESSAGE" value="draft rdt_recv()" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -195,26 +204,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="487" column="0" lean-forward="true" selection-start-line="487" selection-start-column="0" selection-end-line="487" selection-end-column="0" />
+        <state relative-caret-position="515">
+          <caret line="524" column="26" lean-forward="false" selection-start-line="524" selection-start-column="26" selection-end-line="524" selection-end-column="26" />
           <folding>
             <element signature="e#382#395#0" expanded="true" />
-            <element signature="e#1391#2653#0" expanded="false" />
-            <element signature="e#2691#2972#0" expanded="false" />
-            <element signature="e#3007#3618#0" expanded="false" />
-            <element signature="e#3718#4126#0" expanded="false" />
-            <element signature="e#4151#4548#0" expanded="false" />
-            <element signature="e#4582#5012#0" expanded="false" />
-            <element signature="e#5048#5276#0" expanded="false" />
-            <element signature="e#5400#5596#0" expanded="false" />
-            <element signature="e#5635#6462#0" expanded="false" />
-            <element signature="e#6494#6823#0" expanded="false" />
-            <element signature="e#6856#7151#0" expanded="false" />
-            <element signature="e#7186#8146#0" expanded="false" />
-            <element signature="e#8196#8551#0" expanded="false" />
-            <element signature="e#8593#8830#0" expanded="false" />
-            <element signature="e#8862#9596#0" expanded="false" />
-            <element signature="e#10106#14158#0" expanded="false" />
+            <element signature="e#1431#2693#0" expanded="false" />
+            <element signature="e#2731#3012#0" expanded="false" />
+            <element signature="e#3047#3658#0" expanded="false" />
+            <element signature="e#3758#4166#0" expanded="false" />
+            <element signature="e#4191#4588#0" expanded="false" />
+            <element signature="e#4622#5052#0" expanded="false" />
+            <element signature="e#5088#5316#0" expanded="false" />
+            <element signature="e#5440#5636#0" expanded="false" />
+            <element signature="e#5675#6502#0" expanded="false" />
+            <element signature="e#6534#6863#0" expanded="false" />
+            <element signature="e#6896#7191#0" expanded="false" />
+            <element signature="e#7226#8186#0" expanded="false" />
+            <element signature="e#8247#8627#0" expanded="false" />
+            <element signature="e#8669#8906#0" expanded="false" />
+            <element signature="e#8938#9672#0" expanded="false" />
           </folding>
         </state>
       </provider>
