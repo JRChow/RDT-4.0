@@ -349,6 +349,7 @@ def rdt_send(sockd, byte_msg):
     global __S, __next_seq_num, __last_ack_no, __N
 
     # Count how many packets needed to send byte_msg
+    whole_msg_len = len(byte_msg)  # Size of the whole message
     __N = __count_pkt(byte_msg)
     snd_pkt = [None] * __N  # Packets to be sent
     first_unacked_ind = 0  # Index of the first unACKed packet
@@ -414,7 +415,7 @@ def rdt_send(sockd, byte_msg):
 
                 # Received all ACKs
                 elif __is_type_between(recv_pkt, TYPE_ACK, __S + __N - 1, __S + __N - 1):
-                    return len(byte_msg)  # Return size of data sent
+                    return whole_msg_len  # Return size of data sent
 
         else:  # Timeout
             print("* TIMEOUT!")
