@@ -37,6 +37,7 @@ __ERR_RATE = 0.0  # set by rdt_network_init()
 __W = 1  # set by rdt_network_init()
 __next_seq_num = 0  # Next sequence number for sender (initially 0)
 __S = 0  # Sender base
+__exp_seq_num = 0  # Expected sequence number for receiver (initially 0)
 
 
 # internal functions - being called within the module
@@ -189,8 +190,6 @@ def __make_data(seq_num, data):
     Input arguments: sequence number, data, checksum
     Return  -> assembled packet
     """
-    global TYPE_DATA, MSG_FORMAT
-
     # Header
     # {
     # __Type        (1 byte)
@@ -218,7 +217,6 @@ def __cut_msg(byte_msg):
     """Ensure data is not longer than max PAYLOAD.
     Input argument: message
     Return  -> (data for one packet, the remaining message)"""
-    global PAYLOAD
     if len(byte_msg) > PAYLOAD:
         data = byte_msg[0:PAYLOAD]
         remaining = byte_msg[PAYLOAD:]
@@ -230,7 +228,6 @@ def __cut_msg(byte_msg):
 
 def __unpack_helper(msg):
     """Helper function to unpack msg."""
-    global MSG_FORMAT
     size = struct.calcsize(MSG_FORMAT)
     (msg_type, seq_num, recv_checksum, payload_len), payload = struct.unpack(MSG_FORMAT, msg[:size]), msg[size:]
     return (msg_type, seq_num, recv_checksum, socket.ntohs(payload_len)), payload  # Byte order conversion
@@ -242,8 +239,6 @@ def __is_corrupt(recv_pkt):
     Input arguments: received packet
     Return  -> True if corrupted, False if not corrupted.
     """
-    global MSG_FORMAT
-
     # Header
     # {
     # __Type        (1 byte)
@@ -278,23 +273,20 @@ def __is_ack_between(recv_pkt, low, high):
     Input arguments: received packet, lower bound, upper bound
     Return  -> True if received ACK w/ seq# in [low, high]
     """
-    global TYPE_ACK
-
     # Dissect the received packet
     (msg_type, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
     return msg_type == TYPE_ACK and low <= recv_seq_num <= high
 
 
-def __is_data(recv_pkt):
-    """Check if the received packet is DATA
+def __is_type(recv_pkt, pkt_type):
+    """Check if the received packet is pkt_type
 
-    Input arguments: the received packet
+    Input arguments: the received packet, pkt_type
 
     Return  -> True if so; False otherwise.
     """
-    global TYPE_DATA
-    (pkt_type, _, _, _), _ = __unpack_helper(recv_pkt)
-    return pkt_type == TYPE_DATA
+    (recv_type, _, _, _), _ = __unpack_helper(recv_pkt)
+    return recv_type == pkt_type
 
 
 def __make_ack(seq_num):
@@ -303,7 +295,6 @@ def __make_ack(seq_num):
     Input argument: sequence number
     Return  -> assembled ACK packet
     """
-    global TYPE_ACK, MSG_FORMAT
     # print("making ACK " + str(seq_num))
 
     # Header
@@ -328,6 +319,17 @@ def __make_ack(seq_num):
     return msg_format.pack(TYPE_ACK, seq_num, checksum, socket.htons(0)) + b''
 
 
+def __has_seq(recv_msg, seq_num):
+    """Check if the received packet has sequence number [seq_num]
+
+    Input arguments: received packet, sequence number
+    Return True if received packet of sequence number [seq_num] and False otherwise
+    """
+    # Dissect the received packet
+    (_, recv_seq_num, _, _), _ = __unpack_helper(recv_msg)
+    return recv_seq_num == seq_num
+
+
 # ------------------------------------------------------------------
 # Send, receive, close.
 
@@ -343,7 +345,7 @@ def rdt_send(sockd, byte_msg):
     whole message has been successfully delivered to remote process.
     (2) Catch any known error and report to the user.
     """
-    global __S, __next_seq_num, __peeraddr, HEADER_SIZE
+    global __S, __next_seq_num, __last_ack_no
 
     # Count how many packets needed to send byte_msg
     n = __count_pkt(byte_msg)
@@ -393,7 +395,7 @@ def rdt_send(sockd, byte_msg):
                     first_unacked_ind = max(recv_seq_num - __S + 1, first_unacked_ind)
 
                 # Received a not corrupt DATA
-                elif __is_data(recv_pkt):
+                elif __is_type(recv_pkt, TYPE_DATA):
                     # FIXME
                     print("rdt_send(): recv DATA ?! -buffer-> " + str(__unpack_helper(recv_pkt)[0]))
                     # if recv_pkt not in __data_buffer:  # If not in buffer, add msg to buffer
@@ -405,8 +407,8 @@ def rdt_send(sockd, byte_msg):
                     except socket.error as err_msg:
                         print("rdt_send(): Error in sending ACK to received data: " + str(err_msg))
                         return -1
-                    # # Update last ack-ed number
-                    # __last_ack_no = data_seq_num
+                    # Update last ack-ed number
+                    __last_ack_no = data_seq_num
                     # print("rdt_send(): ACK DATA [%d]" % data_seq_num)
 
                 # Received all ACKs
@@ -436,9 +438,53 @@ def rdt_recv(sockd, length):
 
     Note: Catch any known error and report to the user.
     """
+    global __last_ack_no, __exp_seq_num
 
+    # # Check if something in buffer
+    # while len(__data_buffer) > 0:
+    #     # Pop data in a FIFO manner
+    #     recv_pkt = __data_buffer.pop(0)  # Guaranteed to be NOT corrupt, and already ACK-ed in rdt_send()
+    #     print("rdt_recv(): <!> Something in buffer! -> " + str(__unpack_helper(recv_pkt)[0]))
+    #     if __has_seq(recv_pkt, __recv_seq_num):  # Buffered data has expected seq num, happily accept and return
+    #         print("rdt_recv(): Received expected buffer DATA [%d] of size %d" % (__recv_seq_num, len(recv_pkt)))
+    #         __recv_seq_num ^= 1  # Flip seq num
+    #         return __unpack_helper(recv_pkt)[1]
 
-######## Your implementation #######
+    recv_expected_data = False
+    while not recv_expected_data:  # Repeat until received expected DATA
+        # Try to receive packet...
+        try:
+            recv_pkt = __udt_recv(sockd, length + HEADER_SIZE)
+        except socket.error as err_msg:
+            print("rdt_recv(): Socket receive error: " + str(err_msg))
+            return b''
+
+        # If packet is corrupt or is ACK, ignore
+        if __is_corrupt(recv_pkt) or __is_type(recv_pkt, TYPE_ACK):
+            print("rdt_recv(): Received [corrupted] or ACK")
+
+        # If received DATA
+        elif __is_type(recv_pkt, TYPE_DATA):
+            # If DATA has expected seq num
+            if __has_seq(recv_pkt, __exp_seq_num):
+                # Send ACK for this expected packet
+                try:
+                    __udt_send(sockd, __peeraddr, __make_ack(__exp_seq_num))
+                except socket.error as err_msg:
+                    print("rdt_recv(): Error in ACK-ing expected data: " + str(err_msg))
+                    return b''
+                # Increment expected sequence number
+                __exp_seq_num += 1
+                (_), payload = __unpack_helper(recv_pkt)  # Extract payload
+                return payload
+            else:  # DATA is not expected
+                # Send ACK for the one prior to the expected
+                try:
+                    __udt_send(sockd, __peeraddr, __make_ack(__exp_seq_num - 1))
+                except socket.error as err_msg:
+                    print("rdt_recv(): Error in ACK-ing expected data: " + str(err_msg))
+                    return b''
+
 
 def rdt_close(sockd):
     """Application calls this function to close the RDT socket.
