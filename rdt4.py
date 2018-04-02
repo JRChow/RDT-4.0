@@ -433,19 +433,19 @@ def rdt_send(sockd, byte_msg):
                         print("send(): ! Buffered")
                         __data_buffer.append(recv_pkt)
 
-                    # ACK the received DATA
-                    (_, data_seq_num, _, _), _ = __unpack_helper(recv_pkt)
-                    try:
-                        __udt_send(sockd, __peeraddr, __make_ack(data_seq_num))
-                    except socket.error as err_msg:
-                        print("send(): Error in sending ACK to received data: " + str(err_msg))
-                        return -1
-
-                    print("send(): ! Sent ACK[%d]" % data_seq_num)
-
-                    # Update last ack-ed number
-                    __last_ack_no = data_seq_num
-                    # print("send(): ACK DATA [%d]" % data_seq_num)
+                    # # ACK the received DATA
+                    # (_, data_seq_num, _, _), _ = __unpack_helper(recv_pkt)
+                    # try:
+                    #     __udt_send(sockd, __peeraddr, __make_ack(data_seq_num))
+                    # except socket.error as err_msg:
+                    #     print("send(): Error in sending ACK to received data: " + str(err_msg))
+                    #     return -1
+                    #
+                    # print("send(): ! Sent ACK[%d]" % data_seq_num)
+                    #
+                    # # Update last ack-ed number
+                    # __last_ack_no = data_seq_num
+                    # # print("send(): ACK DATA [%d]" % data_seq_num)
         # Timeout
         else:
             print("* TIMEOUT!")
@@ -476,15 +476,36 @@ def rdt_recv(sockd, length):
     # Check if something in buffer
     while len(__data_buffer) > 0:
         # Pop data in a FIFO manner
-        recv_pkt = __data_buffer.pop(0)  # Guaranteed to be NOT corrupt, and already ACK-ed in rdt_send()
+        recv_pkt = __data_buffer.pop(0)  # Guaranteed to be NOT corrupt
         print("recv(): ! Something in buffer -> " + __parse(recv_pkt))
 
         if __has_seq(recv_pkt, __exp_seq_num):  # Buffered data has expected seq num, happily accept and return
-            print("recv(): ! Buffer is expected (%d)" % __exp_seq_num)
+            print("recv(): ! Buffer expected (%d)" % __exp_seq_num)
+
+            # ACK the received DATA
+            try:
+                __udt_send(sockd, __peeraddr, __make_ack(__exp_seq_num))
+            except socket.error as err_msg:
+                print("send(): Error in sending ACK to received data: " + str(err_msg))
+                return -1
+
+            print("recv(): ! Sent ACK[%d]" % __exp_seq_num)
+
+            # Update last ack-ed number
+            __last_ack_no = __exp_seq_num
+
             # Increment expected sequence number
             __exp_seq_num += 1
             (_), payload = __unpack_helper(recv_pkt)  # Extract payload
             return payload
+        else:  # Buffered DATA not expected
+            # Send ACK for the one prior to the expected
+            try:
+                __udt_send(sockd, __peeraddr, __make_ack(__exp_seq_num - 1))
+            except socket.error as err_msg:
+                print("recv(): Error in ACK-ing expected data: " + str(err_msg))
+                return b''
+            print("recv(): ! Buffer NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num, int(__exp_seq_num - 1)))
 
     recv_expected_data = False
     while not recv_expected_data:  # Repeat until received expected DATA

@@ -17,8 +17,8 @@
       <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+            <state relative-caret-position="473">
+              <caret line="507" column="113" lean-forward="false" selection-start-line="507" selection-start-column="113" selection-end-line="507" selection-end-column="113" />
               <folding>
                 <element signature="e#1465#2727#0" expanded="false" />
                 <element signature="e#2765#3046#0" expanded="false" />
@@ -36,7 +36,7 @@
                 <element signature="e#9788#10124#0" expanded="false" />
                 <element signature="e#10149#10634#0" expanded="false" />
                 <element signature="e#10766#11221#1" expanded="false" />
-                <element signature="e#15443#15914#1" expanded="false" />
+                <element signature="e#15507#15978#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -243,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522681351485</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix seq num format string">
+      <created>1522681855623</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1522681855623</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -290,7 +297,8 @@
     <MESSAGE value="add server/client progress" />
     <MESSAGE value="add back buffer" />
     <MESSAGE value="format" />
-    <option name="LAST_COMMIT_MESSAGE" value="format" />
+    <MESSAGE value="fix seq num format string" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix seq num format string" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -325,8 +333,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+        <state relative-caret-position="473">
+          <caret line="507" column="113" lean-forward="false" selection-start-line="507" selection-start-column="113" selection-end-line="507" selection-end-column="113" />
           <folding>
             <element signature="e#1465#2727#0" expanded="false" />
             <element signature="e#2765#3046#0" expanded="false" />
@@ -344,7 +352,7 @@
             <element signature="e#9788#10124#0" expanded="false" />
             <element signature="e#10149#10634#0" expanded="false" />
             <element signature="e#10766#11221#1" expanded="false" />
-            <element signature="e#15443#15914#1" expanded="false" />
+            <element signature="e#15507#15978#1" expanded="false" />
           </folding>
         </state>
       </provider>
