@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8d673bcd-deb0-466f-9b03-3eccee31322d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/rdt4.py" afterPath="$PROJECT_DIR$/rdt4.py" />
+      <change beforePath="$PROJECT_DIR$/test-client3.py" afterPath="$PROJECT_DIR$/test-client3.py" />
+      <change beforePath="$PROJECT_DIR$/test-server3.py" afterPath="$PROJECT_DIR$/test-server3.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,10 +15,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
+            <state relative-caret-position="1082">
               <caret line="516" column="108" lean-forward="true" selection-start-line="516" selection-start-column="108" selection-end-line="516" selection-end-column="108" />
               <folding>
                 <element signature="e#1431#2693#0" expanded="false" />
@@ -33,6 +34,26 @@
                 <element signature="e#9754#10090#0" expanded="false" />
                 <element signature="e#18273#20071#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test-client3.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-client3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="173">
+              <caret line="77" column="65" lean-forward="true" selection-start-line="77" selection-start-column="65" selection-end-line="77" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test-server3.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test-server3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="79" column="33" lean-forward="false" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -55,6 +76,7 @@
       <find>rdt_recv</find>
       <find>print</find>
       <find>expected</find>
+      <find>NOT expected</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -64,6 +86,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/rdt4.py" />
+        <option value="$PROJECT_DIR$/test-server3.py" />
+        <option value="$PROJECT_DIR$/test-client3.py" />
       </list>
     </option>
   </component>
@@ -187,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522601461877</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="ubuntu test ready">
+      <created>1522680003964</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1522680003964</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -230,7 +261,8 @@
     <MESSAGE value="push before ubuntu test" />
     <MESSAGE value="fix nonetype" />
     <MESSAGE value="count_pkt round error fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="count_pkt round error fix" />
+    <MESSAGE value="ubuntu test ready" />
+    <option name="LAST_COMMIT_MESSAGE" value="ubuntu test ready" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -247,7 +279,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
+        <state relative-caret-position="1082">
           <caret line="516" column="108" lean-forward="true" selection-start-line="516" selection-start-column="108" selection-end-line="516" selection-end-column="108" />
           <folding>
             <element signature="e#1431#2693#0" expanded="false" />
@@ -263,6 +295,22 @@
             <element signature="e#9754#10090#0" expanded="false" />
             <element signature="e#18273#20071#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-client3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="77" column="65" lean-forward="true" selection-start-line="77" selection-start-column="65" selection-end-line="77" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-server3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="79" column="33" lean-forward="false" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
