@@ -559,7 +559,7 @@ def rdt_close(sockd):
                 print("close(): __S = %d, __N = %d" % (__S, __N))
 
                 # If not corrupt and is DATA of the last window
-                if not __is_corrupt(recv_pkt) and __is_type_between(recv_pkt, TYPE_DATA, __S, __S + __N):
+                if not __is_corrupt(recv_pkt):
                     # Ack the DATA packet
                     (_, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
                     try:
