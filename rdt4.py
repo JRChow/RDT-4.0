@@ -39,6 +39,7 @@ __next_seq_num = 0  # Next sequence number for sender (initially 0)
 __S = 0  # Sender base
 __N = 1  # Number of packets to be sent
 __exp_seq_num = 0  # Expected sequence number for receiver (initially 0)
+__data_buffer = []  # Data buffer
 
 
 # internal functions - being called within the module
@@ -363,7 +364,7 @@ def rdt_send(sockd, byte_msg):
     whole message has been successfully delivered to remote process.
     (2) Catch any known error and report to the user.
     """
-    global __S, __next_seq_num, __last_ack_no, __N
+    global __S, __next_seq_num, __last_ack_no, __N, __data_buffer
 
     # Count how many packets needed to send byte_msg
     whole_msg_len = len(byte_msg)  # Size of the whole message
@@ -425,9 +426,12 @@ def rdt_send(sockd, byte_msg):
                 # Received a not corrupt DATA
                 elif __is_type(recv_pkt, TYPE_DATA):
                     # FIXME
-                    print("send(): ! Receive " + str(__unpack_helper(recv_pkt)[0]))
-                    # if recv_pkt not in __data_buffer:  # If not in buffer, add msg to buffer
-                    #     __data_buffer.append(recv_pkt)
+                    print("send(): ! Receive " + __parse(recv_pkt))
+
+                    # If not in buffer, add msg to buffer
+                    if recv_pkt not in __data_buffer:
+                        print("send(): ! Buffered")
+                        __data_buffer.append(recv_pkt)
 
                     # ACK the received DATA
                     (_, data_seq_num, _, _), _ = __unpack_helper(recv_pkt)
@@ -436,6 +440,8 @@ def rdt_send(sockd, byte_msg):
                     except socket.error as err_msg:
                         print("send(): Error in sending ACK to received data: " + str(err_msg))
                         return -1
+
+                    print("send(): ! Sent ACK[%d]" % data_seq_num)
 
                     # Update last ack-ed number
                     __last_ack_no = data_seq_num
@@ -465,17 +471,20 @@ def rdt_recv(sockd, length):
 
     Note: Catch any known error and report to the user.
     """
-    global __last_ack_no, __exp_seq_num
+    global __last_ack_no, __exp_seq_num, __data_buffer
 
-    # # Check if something in buffer
-    # while len(__data_buffer) > 0:
-    #     # Pop data in a FIFO manner
-    #     recv_pkt = __data_buffer.pop(0)  # Guaranteed to be NOT corrupt, and already ACK-ed in rdt_send()
-    #     print("rdt_recv(): <!> Something in buffer! -> " + str(__unpack_helper(recv_pkt)[0]))
-    #     if __has_seq(recv_pkt, __recv_seq_num):  # Buffered data has expected seq num, happily accept and return
-    #         print("rdt_recv(): Received expected buffer DATA [%d] of size %d" % (__recv_seq_num, len(recv_pkt)))
-    #         __recv_seq_num ^= 1  # Flip seq num
-    #         return __unpack_helper(recv_pkt)[1]
+    # Check if something in buffer
+    while len(__data_buffer) > 0:
+        # Pop data in a FIFO manner
+        recv_pkt = __data_buffer.pop(0)  # Guaranteed to be NOT corrupt, and already ACK-ed in rdt_send()
+        print("recv(): ! Something in buffer -> " + __parse(recv_pkt))
+
+        if __has_seq(recv_pkt, __exp_seq_num):  # Buffered data has expected seq num, happily accept and return
+            print("recv(): ! Buffer is expected (%d)" % __exp_seq_num)
+            # Increment expected sequence number
+            __exp_seq_num += 1
+            (_), payload = __unpack_helper(recv_pkt)  # Extract payload
+            return payload
 
     recv_expected_data = False
     while not recv_expected_data:  # Repeat until received expected DATA
