@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d673bcd-deb0-466f-9b03-3eccee31322d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/test-client3.py" afterPath="$PROJECT_DIR$/test-client3.py" />
-      <change beforePath="$PROJECT_DIR$/test-server3.py" afterPath="$PROJECT_DIR$/test-server3.py" />
+      <change beforePath="$PROJECT_DIR$/rdt4.py" afterPath="$PROJECT_DIR$/rdt4.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="821">
-              <caret line="528" column="21" lean-forward="true" selection-start-line="528" selection-start-column="21" selection-end-line="528" selection-end-column="21" />
+            <state relative-caret-position="227">
+              <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
               <folding>
                 <element signature="e#1465#2727#0" expanded="false" />
                 <element signature="e#2765#3046#0" expanded="false" />
@@ -28,7 +27,6 @@
                 <element signature="e#4225#4622#0" expanded="false" />
                 <element signature="e#4656#5086#0" expanded="false" />
                 <element signature="e#5474#5711#0" expanded="false" />
-                <element signature="e#5750#6577#0" expanded="false" />
                 <element signature="e#6609#6938#0" expanded="false" />
                 <element signature="e#6971#7266#0" expanded="false" />
                 <element signature="e#7301#8261#0" expanded="false" />
@@ -54,10 +52,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test-server3.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test-server3.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test-server3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
+            <state relative-caret-position="1155">
               <caret line="79" column="43" lean-forward="false" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
               <folding />
             </state>
@@ -91,9 +89,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/rdt4.py" />
         <option value="$PROJECT_DIR$/test-client3.py" />
         <option value="$PROJECT_DIR$/test-server3.py" />
+        <option value="$PROJECT_DIR$/rdt4.py" />
       </list>
     </option>
   </component>
@@ -238,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522681148399</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="format">
+      <created>1522681351485</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1522681351485</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -284,7 +289,8 @@
     <MESSAGE value="ubuntu test ready" />
     <MESSAGE value="add server/client progress" />
     <MESSAGE value="add back buffer" />
-    <option name="LAST_COMMIT_MESSAGE" value="add back buffer" />
+    <MESSAGE value="format" />
+    <option name="LAST_COMMIT_MESSAGE" value="format" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -301,10 +307,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test-client3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="77" column="43" lean-forward="false" selection-start-line="77" selection-start-column="43" selection-end-line="77" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-server3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1155">
+          <caret line="79" column="43" lean-forward="false" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="821">
-          <caret line="528" column="21" lean-forward="true" selection-start-line="528" selection-start-column="21" selection-end-line="528" selection-end-column="21" />
+        <state relative-caret-position="227">
+          <caret line="28" column="16" lean-forward="false" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
           <folding>
             <element signature="e#1465#2727#0" expanded="false" />
             <element signature="e#2765#3046#0" expanded="false" />
@@ -313,7 +335,6 @@
             <element signature="e#4225#4622#0" expanded="false" />
             <element signature="e#4656#5086#0" expanded="false" />
             <element signature="e#5474#5711#0" expanded="false" />
-            <element signature="e#5750#6577#0" expanded="false" />
             <element signature="e#6609#6938#0" expanded="false" />
             <element signature="e#6971#7266#0" expanded="false" />
             <element signature="e#7301#8261#0" expanded="false" />
@@ -325,22 +346,6 @@
             <element signature="e#10766#11221#1" expanded="false" />
             <element signature="e#15443#15914#1" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-client3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="77" column="43" lean-forward="false" selection-start-line="77" selection-start-column="43" selection-end-line="77" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-server3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="79" column="43" lean-forward="false" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>

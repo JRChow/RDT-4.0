@@ -26,7 +26,7 @@ TIMEOUT = 0.05  # retransmission timeout duration
 TWAIT = 10 * TIMEOUT  # TimeWait duration
 TYPE_DATA = 12  # 12 means data
 TYPE_ACK = 11  # 11 means ACK
-MSG_FORMAT = 'B?HH'  # Format string for header structure
+MSG_FORMAT = 'BBHH'  # Format string for header structure
 HEADER_SIZE = 6  # 6 bytes
 
 # store peer address info
