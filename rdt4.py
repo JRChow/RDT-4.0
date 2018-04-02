@@ -554,7 +554,10 @@ def rdt_close(sockd):
                     recv_pkt = __udt_recv(sock, PAYLOAD + HEADER_SIZE)  # Add header size
                 except socket.error as err_msg:
                     print("rdt_close(): __udt_recv error: ", err_msg)
-                print("rdt_close(): Got activity -> " + str(__unpack_helper(recv_pkt)[0]))
+                print("rdt_close(): Got activity -> " + __parse(recv_pkt))
+
+                print("close(): __S = %d, __N = %d" % (__S, __N))
+
                 # If not corrupt and is DATA of the last window
                 if not __is_corrupt(recv_pkt) and __is_type_between(recv_pkt, TYPE_DATA, __S, __S + __N):
                     # Ack the DATA packet
