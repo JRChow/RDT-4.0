@@ -387,7 +387,7 @@ def rdt_send(sockd, byte_msg):
             return -1
         print("send(): sent " + __parse(snd_pkt[i]))
         # Increment sequence number
-        __next_seq_num += 1
+        __next_seq_num = (__next_seq_num + 1) % 256  # Modular arithmetic (wrap-around)
 
     r_sock_list = [sockd]  # Used in select.select()
     recv_all_ack = False
@@ -446,12 +446,12 @@ def rdt_send(sockd, byte_msg):
                     else:  # DATA not expected
                         # Send ACK for the one prior to the expected
                         try:
-                            __udt_send(sockd, __peeraddr, __make_ack(__exp_seq_num - 1))
+                            __udt_send(sockd, __peeraddr, __make_ack((__exp_seq_num + 256 - 1) % 256))
                         except socket.error as err_msg:
                             print("send(): Error in ACK-ing expected data: " + str(err_msg))
                             return b''
                         print("send(): ! Buffer NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num,
-                                                                                      int(__exp_seq_num - 1)))
+                                                                                      int((__exp_seq_num + 256 - 1) % 256)))
         # Timeout
         else:
             print("* TIMEOUT!")
@@ -488,7 +488,7 @@ def rdt_recv(sockd, length):
         if __has_seq(recv_pkt, __exp_seq_num):  # Buffered data has expected seq num, happily accept and return
             print("recv(): ! Buffer expected (%d)" % __exp_seq_num)
             # Increment expected sequence number
-            __exp_seq_num += 1
+            __exp_seq_num = (__exp_seq_num + 1) % 256
             (_), payload = __unpack_helper(recv_pkt)  # Extract payload
             return payload
 
@@ -519,17 +519,17 @@ def rdt_recv(sockd, length):
                     return b''
                 print("recv(): expected -> sent ACK[%d]" % __exp_seq_num)
                 # Increment expected sequence number
-                __exp_seq_num += 1
+                __exp_seq_num = (__exp_seq_num + 1) % 256
                 (_), payload = __unpack_helper(recv_pkt)  # Extract payload
                 return payload
             else:  # DATA is not expected
                 # Send ACK for the one prior to the expected
                 try:
-                    __udt_send(sockd, __peeraddr, __make_ack(__exp_seq_num - 1))
+                    __udt_send(sockd, __peeraddr, __make_ack((__exp_seq_num + 256 - 1) % 256))
                 except socket.error as err_msg:
                     print("recv(): Error in ACK-ing expected data: " + str(err_msg))
                     return b''
-                print("recv(): NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num, int(__exp_seq_num - 1)))
+                print("recv(): NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num, int((__exp_seq_num + 256 - 1)) % 256))
 
 
 def rdt_close(sockd):
