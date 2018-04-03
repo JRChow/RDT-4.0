@@ -389,6 +389,7 @@ def rdt_send(sockd, byte_msg):
     # Update sender base
     __S = __next_seq_num
 
+    print("send(): gonna send %d packets..." % __N)
     # Compose and send all data packets
     for i in range(__N):
         data, byte_msg = __cut_msg(byte_msg)  # Extract from remaining msg
