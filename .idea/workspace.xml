@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d673bcd-deb0-466f-9b03-3eccee31322d" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/jrzhou.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/jrzhou.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/rdt4.py" afterPath="$PROJECT_DIR$/rdt4.py" />
     </list>
@@ -17,25 +19,17 @@
       <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="280" column="26" lean-forward="true" selection-start-line="280" selection-start-column="26" selection-end-line="280" selection-end-column="26" />
+            <state relative-caret-position="210">
+              <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
-                <element signature="e#1465#2727#0" expanded="false" />
-                <element signature="e#2765#3046#0" expanded="false" />
-                <element signature="e#3081#3692#0" expanded="false" />
-                <element signature="e#3792#4200#0" expanded="false" />
-                <element signature="e#4225#4622#0" expanded="false" />
-                <element signature="e#4656#5086#0" expanded="false" />
-                <element signature="e#5474#5711#0" expanded="false" />
-                <element signature="e#6609#6938#0" expanded="false" />
-                <element signature="e#6971#7266#0" expanded="false" />
-                <element signature="e#7301#8261#0" expanded="false" />
-                <element signature="e#8857#9094#0" expanded="false" />
-                <element signature="e#9126#9860#0" expanded="false" />
-                <element signature="e#9901#10237#0" expanded="false" />
-                <element signature="e#10262#10747#0" expanded="false" />
-                <element signature="e#11049#11504#1" expanded="false" />
-                <element signature="e#16634#17105#1" expanded="false" />
+                <element signature="e#1614#2880#0" expanded="false" />
+                <element signature="e#2918#3203#0" expanded="false" />
+                <element signature="e#3238#3849#0" expanded="false" />
+                <element signature="e#3949#4371#0" expanded="false" />
+                <element signature="e#4396#4793#0" expanded="false" />
+                <element signature="e#4827#5257#0" expanded="false" />
+                <element signature="e#5293#5521#0" expanded="false" />
+                <element signature="e#11609#12064#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,7 +61,6 @@
     <findStrings>
       <find>sent_len</find>
       <find>send</find>
-      <find>last_ack</find>
       <find>__is_data</find>
       <find>is_ack_between</find>
       <find>has_seq</find>
@@ -86,6 +79,8 @@
       <find>between</find>
       <find>accept</find>
       <find>is_type_between</find>
+      <find>256</find>
+      <find>last_ack</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -109,6 +104,22 @@
   <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1280" />
     <option name="height" value="800" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>AngularJS</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -144,6 +155,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -318,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522747039267</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="another attemp to fix wrap">
+      <created>1522747803970</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1522747803970</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -374,7 +393,8 @@
     <MESSAGE value="fix wrap-around, try again" />
     <MESSAGE value="first unACKed index also wrapped" />
     <MESSAGE value="debug info" />
-    <option name="LAST_COMMIT_MESSAGE" value="debug info" />
+    <MESSAGE value="another attemp to fix wrap" />
+    <option name="LAST_COMMIT_MESSAGE" value="another attemp to fix wrap" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -388,22 +408,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1465#2727#0" expanded="false" />
-            <element signature="e#2765#3046#0" expanded="false" />
-            <element signature="e#3081#3692#0" expanded="false" />
-            <element signature="e#3792#4200#0" expanded="false" />
-            <element signature="e#4225#4622#0" expanded="false" />
-            <element signature="e#4656#5086#0" expanded="false" />
-            <element signature="e#5474#5711#0" expanded="false" />
-            <element signature="e#6609#6938#0" expanded="false" />
-            <element signature="e#6971#7266#0" expanded="false" />
-            <element signature="e#7301#8261#0" expanded="false" />
-            <element signature="e#8857#9094#0" expanded="false" />
-            <element signature="e#9126#9860#0" expanded="false" />
-            <element signature="e#9901#10237#0" expanded="false" />
-            <element signature="e#10262#10747#0" expanded="false" />
-            <element signature="e#11049#11504#1" expanded="false" />
-            <element signature="e#16634#17105#1" expanded="false" />
+            <element signature="e#1614#2880#0" expanded="false" />
+            <element signature="e#2918#3203#0" expanded="false" />
+            <element signature="e#3238#3849#0" expanded="false" />
+            <element signature="e#3949#4371#0" expanded="false" />
+            <element signature="e#4396#4793#0" expanded="false" />
+            <element signature="e#4827#5257#0" expanded="false" />
+            <element signature="e#5293#5521#0" expanded="false" />
+            <element signature="e#11609#12064#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -449,25 +461,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="280" column="26" lean-forward="true" selection-start-line="280" selection-start-column="26" selection-end-line="280" selection-end-column="26" />
+        <state relative-caret-position="210">
+          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
-            <element signature="e#1465#2727#0" expanded="false" />
-            <element signature="e#2765#3046#0" expanded="false" />
-            <element signature="e#3081#3692#0" expanded="false" />
-            <element signature="e#3792#4200#0" expanded="false" />
-            <element signature="e#4225#4622#0" expanded="false" />
-            <element signature="e#4656#5086#0" expanded="false" />
-            <element signature="e#5474#5711#0" expanded="false" />
-            <element signature="e#6609#6938#0" expanded="false" />
-            <element signature="e#6971#7266#0" expanded="false" />
-            <element signature="e#7301#8261#0" expanded="false" />
-            <element signature="e#8857#9094#0" expanded="false" />
-            <element signature="e#9126#9860#0" expanded="false" />
-            <element signature="e#9901#10237#0" expanded="false" />
-            <element signature="e#10262#10747#0" expanded="false" />
-            <element signature="e#11049#11504#1" expanded="false" />
-            <element signature="e#16634#17105#1" expanded="false" />
+            <element signature="e#1614#2880#0" expanded="false" />
+            <element signature="e#2918#3203#0" expanded="false" />
+            <element signature="e#3238#3849#0" expanded="false" />
+            <element signature="e#3949#4371#0" expanded="false" />
+            <element signature="e#4396#4793#0" expanded="false" />
+            <element signature="e#4827#5257#0" expanded="false" />
+            <element signature="e#5293#5521#0" expanded="false" />
+            <element signature="e#11609#12064#1" expanded="false" />
           </folding>
         </state>
       </provider>
