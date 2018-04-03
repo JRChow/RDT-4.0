@@ -274,13 +274,13 @@ def __is_type_between(recv_pkt, pkt_type, low, high):
 
     Input arguments: received packet, packet type, lower bound, upper bound
     Return  -> True if received pkt_type w/ seq# in [low, high]
+    Note: Allow high to overflow temporarily.
     """
     # Dissect the received packet
     (recv_type, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
-    if low <= high:
-        return recv_type == pkt_type and low <= recv_seq_num <= high
-    else:  # Modular arithmetic (high < low)
-        return recv_type == pkt_type and (0 <= recv_seq_num <= high or low <= recv_seq_num <= 255)
+    if recv_seq_num < low:
+        recv_seq_num += 256
+    return recv_type == pkt_type and low <= recv_seq_num <= high
 
 
 def __is_type(recv_pkt, pkt_type):
@@ -427,16 +427,16 @@ def rdt_send(sockd, byte_msg):
                 # If is ACK
                 elif __is_type(recv_pkt, TYPE_ACK):
                     # Out-of-range, ignore
-                    if not __is_type_between(recv_pkt, TYPE_ACK, __S, __seq_add(__S, __N-1)):
+                    if not __is_type_between(recv_pkt, TYPE_ACK, __S, __S + __N-1):
                         print("send(): receive out-of-range ACK -> ignore")
                     # Happily received ACK in window, and set as ACKed
-                    elif __is_type_between(recv_pkt, TYPE_ACK, __S, __seq_add(__S, __N-2)):
-                        print("send(): range [%d, %d] -> accept ACK" % (__S, __seq_add(__S, __N-2)))
+                    elif __is_type_between(recv_pkt, TYPE_ACK, __S, __S + __N-2):
+                        print("send(): range [%d, %d] -> accept ACK" % (__S, __S + __N-2))
                         (_, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
                         # Update first unACKed index if necessary (cumulative ACK)
                         first_unacked_ind = max(__seq_sub(recv_seq_num, __S) + 1, first_unacked_ind)
                     # Received all ACKs
-                    elif __is_type_between(recv_pkt, TYPE_ACK, __seq_add(__S, __N-1), __seq_add(__S, __N-1)):
+                    elif __is_type_between(recv_pkt, TYPE_ACK, __S + __N-1, __S + __N-1):
                         return whole_msg_len  # Return size of data sent
                 # Received a not corrupt DATA
                 elif __is_type(recv_pkt, TYPE_DATA):
