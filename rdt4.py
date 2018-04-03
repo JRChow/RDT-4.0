@@ -270,14 +270,17 @@ def __is_corrupt(recv_pkt):
 
 
 def __is_type_between(recv_pkt, pkt_type, low, high):
-    """Check if the received packet is pkt_type between low and high.
+    """Check if the received packet is pkt_type between low and high (inclusive).
 
     Input arguments: received packet, packet type, lower bound, upper bound
     Return  -> True if received pkt_type w/ seq# in [low, high]
     """
     # Dissect the received packet
     (recv_type, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
-    return recv_type == pkt_type and low <= recv_seq_num <= high
+    if low <= high:
+        return recv_type == pkt_type and low <= recv_seq_num <= high
+    else:  # Modular arithmetic (high < low)
+        return recv_type == pkt_type and (0 <= recv_seq_num <= high or low <= recv_seq_num <= 255)
 
 
 def __is_type(recv_pkt, pkt_type):
@@ -349,6 +352,17 @@ def __parse(msg):
         msg_str += " -> " + str(payload)
     return msg_str
 
+
+def __seq_add(a, b):
+    """Add sequence numbers"""
+    return (a + b) % 256
+
+
+def __seq_sub(a, b):
+    """Subtract sequence numbers"""
+    return (a - b + 256) % 256
+
+
 # ------------------------------------------------------------------
 # Send, receive, close.
 
@@ -387,7 +401,7 @@ def rdt_send(sockd, byte_msg):
             return -1
         print("send(): sent " + __parse(snd_pkt[i]))
         # Increment sequence number
-        __next_seq_num = (__next_seq_num + 1) % 256  # Modular arithmetic (wrap-around)
+        __next_seq_num = __seq_add(__next_seq_num, 1)  # Modular arithmetic (wrap-around)
 
     r_sock_list = [sockd]  # Used in select.select()
     recv_all_ack = False
@@ -412,16 +426,16 @@ def rdt_send(sockd, byte_msg):
                 # If is ACK
                 elif __is_type(recv_pkt, TYPE_ACK):
                     # Out-of-range, ignore
-                    if not __is_type_between(recv_pkt, TYPE_ACK, __S, __S + __N - 1):
+                    if not __is_type_between(recv_pkt, TYPE_ACK, __S, __seq_add(__S, __N-1)):
                         print("send(): receive out-of-range ACK -> ignore")
                     # Happily received ACK in window, and set as ACKed
-                    elif __is_type_between(recv_pkt, TYPE_ACK, __S, __S + __N - 2):
+                    elif __is_type_between(recv_pkt, TYPE_ACK, __S, __seq_add(__S, __N-2)):
                         print("send(): accept ACK")
                         (_, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
                         # Update first unACKed index if necessary (cumulative ACK)
                         first_unacked_ind = max(recv_seq_num - __S + 1, first_unacked_ind)
                     # Received all ACKs
-                    elif __is_type_between(recv_pkt, TYPE_ACK, __S + __N - 1, __S + __N - 1):
+                    elif __is_type_between(recv_pkt, TYPE_ACK, __seq_add(__S, __N-1), __seq_add(__S, __N-1)):
                         return whole_msg_len  # Return size of data sent
                 # Received a not corrupt DATA
                 elif __is_type(recv_pkt, TYPE_DATA):
@@ -446,12 +460,12 @@ def rdt_send(sockd, byte_msg):
                     else:  # DATA not expected
                         # Send ACK for the one prior to the expected
                         try:
-                            __udt_send(sockd, __peeraddr, __make_ack((__exp_seq_num + 256 - 1) % 256))
+                            __udt_send(sockd, __peeraddr, __make_ack((__seq_sub(__exp_seq_num, 1))))
                         except socket.error as err_msg:
                             print("send(): Error in ACK-ing expected data: " + str(err_msg))
                             return b''
                         print("send(): ! Buffer NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num,
-                                                                                      int((__exp_seq_num + 256 - 1) % 256)))
+                                                                                      __seq_sub(__exp_seq_num, 1)))
         # Timeout
         else:
             print("* TIMEOUT!")
@@ -488,7 +502,7 @@ def rdt_recv(sockd, length):
         if __has_seq(recv_pkt, __exp_seq_num):  # Buffered data has expected seq num, happily accept and return
             print("recv(): ! Buffer expected (%d)" % __exp_seq_num)
             # Increment expected sequence number
-            __exp_seq_num = (__exp_seq_num + 1) % 256
+            __exp_seq_num = __seq_add(__exp_seq_num, 1)
             (_), payload = __unpack_helper(recv_pkt)  # Extract payload
             return payload
 
@@ -519,17 +533,17 @@ def rdt_recv(sockd, length):
                     return b''
                 print("recv(): expected -> sent ACK[%d]" % __exp_seq_num)
                 # Increment expected sequence number
-                __exp_seq_num = (__exp_seq_num + 1) % 256
+                __exp_seq_num = __seq_add(__exp_seq_num, 1)
                 (_), payload = __unpack_helper(recv_pkt)  # Extract payload
                 return payload
             else:  # DATA is not expected
                 # Send ACK for the one prior to the expected
                 try:
-                    __udt_send(sockd, __peeraddr, __make_ack((__exp_seq_num + 256 - 1) % 256))
+                    __udt_send(sockd, __peeraddr, __make_ack(__seq_sub(__exp_seq_num, 1)))
                 except socket.error as err_msg:
                     print("recv(): Error in ACK-ing expected data: " + str(err_msg))
                     return b''
-                print("recv(): NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num, int((__exp_seq_num + 256 - 1)) % 256))
+                print("recv(): NOT expected (%d) -> sent ACK[%d]" % (__exp_seq_num, __seq_sub(__exp_seq_num, 1)))
 
 
 def rdt_close(sockd):
