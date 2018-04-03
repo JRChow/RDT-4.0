@@ -17,8 +17,8 @@
       <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="435" column="101" lean-forward="true" selection-start-line="435" selection-start-column="101" selection-end-line="435" selection-end-column="101" />
+            <state relative-caret-position="504">
+              <caret line="437" column="58" lean-forward="true" selection-start-line="437" selection-start-column="58" selection-end-line="437" selection-end-column="58" />
               <folding>
                 <element signature="e#1465#2727#0" expanded="false" />
                 <element signature="e#2765#3046#0" expanded="false" />
@@ -35,7 +35,7 @@
                 <element signature="e#9968#10304#0" expanded="false" />
                 <element signature="e#10329#10814#0" expanded="false" />
                 <element signature="e#11116#11571#1" expanded="false" />
-                <element signature="e#16651#17122#1" expanded="false" />
+                <element signature="e#16699#17170#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -296,7 +296,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522746466172</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="first unACKed index also wrapped">
+      <created>1522746747987</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1522746747987</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -350,7 +357,8 @@
     <MESSAGE value="ACK remove constraint on seq num in close()" />
     <MESSAGE value="add modular arithmetic (wrap-around &amp; reuse)" />
     <MESSAGE value="fix wrap-around, try again" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix wrap-around, try again" />
+    <MESSAGE value="first unACKed index also wrapped" />
+    <option name="LAST_COMMIT_MESSAGE" value="first unACKed index also wrapped" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -379,7 +387,7 @@
             <element signature="e#9968#10304#0" expanded="false" />
             <element signature="e#10329#10814#0" expanded="false" />
             <element signature="e#11116#11571#1" expanded="false" />
-            <element signature="e#16651#17122#1" expanded="false" />
+            <element signature="e#16699#17170#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -425,8 +433,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="435" column="101" lean-forward="true" selection-start-line="435" selection-start-column="101" selection-end-line="435" selection-end-column="101" />
+        <state relative-caret-position="504">
+          <caret line="437" column="58" lean-forward="true" selection-start-line="437" selection-start-column="58" selection-end-line="437" selection-end-column="58" />
           <folding>
             <element signature="e#1465#2727#0" expanded="false" />
             <element signature="e#2765#3046#0" expanded="false" />
@@ -443,7 +451,7 @@
             <element signature="e#9968#10304#0" expanded="false" />
             <element signature="e#10329#10814#0" expanded="false" />
             <element signature="e#11116#11571#1" expanded="false" />
-            <element signature="e#16651#17122#1" expanded="false" />
+            <element signature="e#16699#17170#1" expanded="false" />
           </folding>
         </state>
       </provider>
