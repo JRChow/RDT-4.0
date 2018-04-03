@@ -433,7 +433,7 @@ def rdt_send(sockd, byte_msg):
                         print("send(): accept ACK")
                         (_, recv_seq_num, _, _), _ = __unpack_helper(recv_pkt)
                         # Update first unACKed index if necessary (cumulative ACK)
-                        first_unacked_ind = max(recv_seq_num - __S + 1, first_unacked_ind)
+                        first_unacked_ind = max( __seq_sub(recv_seq_num, __S) + 1, first_unacked_ind)
                     # Received all ACKs
                     elif __is_type_between(recv_pkt, TYPE_ACK, __seq_add(__S, __N-1), __seq_add(__S, __N-1)):
                         return whole_msg_len  # Return size of data sent

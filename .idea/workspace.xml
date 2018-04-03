@@ -17,8 +17,8 @@
       <file leaf-file-name="rdt4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rdt4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="282" column="70" lean-forward="false" selection-start-line="282" selection-start-column="70" selection-end-line="282" selection-end-column="70" />
+            <state relative-caret-position="324">
+              <caret line="435" column="101" lean-forward="true" selection-start-line="435" selection-start-column="101" selection-end-line="435" selection-end-column="101" />
               <folding>
                 <element signature="e#1465#2727#0" expanded="false" />
                 <element signature="e#2765#3046#0" expanded="false" />
@@ -35,7 +35,7 @@
                 <element signature="e#9968#10304#0" expanded="false" />
                 <element signature="e#10329#10814#0" expanded="false" />
                 <element signature="e#11116#11571#1" expanded="false" />
-                <element signature="e#16640#17111#1" expanded="false" />
+                <element signature="e#16651#17122#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -84,6 +84,7 @@
       <find>next_seq_num</find>
       <find>__S</find>
       <find>between</find>
+      <find>accept</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -288,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1522739986980</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix wrap-around, try again">
+      <created>1522746466172</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1522746466172</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -341,7 +349,8 @@
     <MESSAGE value="add debug info" />
     <MESSAGE value="ACK remove constraint on seq num in close()" />
     <MESSAGE value="add modular arithmetic (wrap-around &amp; reuse)" />
-    <option name="LAST_COMMIT_MESSAGE" value="add modular arithmetic (wrap-around &amp; reuse)" />
+    <MESSAGE value="fix wrap-around, try again" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix wrap-around, try again" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -370,7 +379,7 @@
             <element signature="e#9968#10304#0" expanded="false" />
             <element signature="e#10329#10814#0" expanded="false" />
             <element signature="e#11116#11571#1" expanded="false" />
-            <element signature="e#16640#17111#1" expanded="false" />
+            <element signature="e#16651#17122#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -416,8 +425,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rdt4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="282" column="70" lean-forward="false" selection-start-line="282" selection-start-column="70" selection-end-line="282" selection-end-column="70" />
+        <state relative-caret-position="324">
+          <caret line="435" column="101" lean-forward="true" selection-start-line="435" selection-start-column="101" selection-end-line="435" selection-end-column="101" />
           <folding>
             <element signature="e#1465#2727#0" expanded="false" />
             <element signature="e#2765#3046#0" expanded="false" />
@@ -434,7 +443,7 @@
             <element signature="e#9968#10304#0" expanded="false" />
             <element signature="e#10329#10814#0" expanded="false" />
             <element signature="e#11116#11571#1" expanded="false" />
-            <element signature="e#16640#17111#1" expanded="false" />
+            <element signature="e#16651#17122#1" expanded="false" />
           </folding>
         </state>
       </provider>
